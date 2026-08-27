@@ -9,6 +9,7 @@ from supplier_detail import open_supplier_detail
 from customer_detail import open_customer_detail
 from report import open_reports
 from ai_dashboard_integration import AIDashboard
+from backup import create_backup, restore_backup
 
 
 LOW_STOCK_THRESHOLD = 100
@@ -386,7 +387,7 @@ def open_order_history(win, back_callback):
     tk.Button(header, text="⬅ Back", command=back_callback, bg="#34495e", fg="white",
               font=("Arial", 10, "bold"), width=10, height=2, relief="flat",
               cursor="hand2").pack(side="left", padx=20)
-    tk.Label(header, text="📋 Order History", font=("Segoe UI", 18, "bold"),
+    tk.Label(header, text="📋 Sale Order History", font=("Segoe UI", 18, "bold"),
               bg="#f4f6f9", fg="#1c275a").pack(side="left", padx=10)
 
     tk.Button(header, text="➕ New Sale (Stock Out)",
@@ -487,6 +488,18 @@ def open_dashboard():
 
     build_header(root)
 
+    # Backup system
+    backup_frame = tk.Frame(root, bg="#eef1f6")
+    backup_frame.pack(fill="x", padx=20, pady=(5, 0))
+
+    tk.Button(backup_frame,text="💾 Backup Data",command=create_backup,bg="#eef1f6",
+            fg="#A3089C",font=("Segoe UI", 11, "bold"),width=16, height=2,
+            cursor="hand2").pack(side="right", padx=5)
+
+    tk.Button(backup_frame,text="🔄 Restore Backup",command=restore_backup,bg="#eef1f6",
+            fg="#0c1568",font=("Segoe UI", 11, "bold"),width=16,height=2,
+            cursor="hand2").pack(side="right", padx=5)
+    
     # ---------------- SCROLLABLE CONTAINER ----------------
     container = tk.Frame(root, bg="#eef1f6")
     container.pack(fill="both", expand=True)
@@ -569,13 +582,13 @@ def open_dashboard():
         open_reports(root, open_dashboard)
 
     menu_items = [
-        ("🧵", "Add New\nThread", go_stock_in),
+        ("🧵", "Stock In\n New Thread", go_stock_in),
         ("🏭", "Issue to\nDyeing", go_issue_dyeing),
         ("📦", "Receive from\nDyeing", go_receive_dyeing),
         ("🗄️", "Current\nStock", go_current_stock),
         ("🎨", "Color Wise\nStock", go_color_wise),
         ("🤝", "Supplier\nManagement", go_supplier),
-        ("📋", "Order\nHistory", go_order_history),
+        ("📋", "Sale Order\nHistory", go_order_history),
         ("📊", "Reports", go_reports),
     ]
 

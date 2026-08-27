@@ -24,7 +24,7 @@ def open_stock_in(prefill_thread=None, prefill_size=None):
     win.geometry("800x600")
     win.config(bg="#f4f6f9")
 
-    tk.Label(win, text="➕ Add New Thread", font=("Arial", 18, "bold"),
+    tk.Label(win, text="➕ New Stock In", font=("Arial", 18, "bold"),
              bg="#f4f6f9").pack(pady=10)
 
     # VARIABLES

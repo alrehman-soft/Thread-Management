@@ -651,9 +651,9 @@ def open_stock_out(win, back_command=None):
             pdf.drawString(55, y, "Thread")
             pdf.drawString(155, y, "Size")
             pdf.drawString(220, y, "Color")
-            pdf.drawString(295, y, "Quantity")
-            pdf.drawString(375, y, "Price")
-            pdf.drawString(465, y, "Total")
+            pdf.drawString(295, y, "Bundle Qty")
+            pdf.drawString(375, y, "Bundle Price")
+            pdf.drawString(465, y, "Total Price")
             pdf.setFillColorRGB(0,0,0)
 
             pdf.line(50, y - 10, page_width - 50, y - 10)
