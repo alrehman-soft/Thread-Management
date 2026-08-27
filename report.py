@@ -634,35 +634,40 @@ def open_reports(win, back_command=None):
                 fontSize=15,textColor=colors.HexColor("#0D3373"),alignment=1,spaceBefore=5,spaceAfter=12)
 
             elements = []
-            logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"images/company_logo.jpeg")
+            logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                     "images/company_logo.jpeg")
 
             if os.path.exists(logo_path):
                 from reportlab.platypus import Image
-                img = Image(logo_path, width=55, height=55)
+                img = Image(logo_path,width=65,height=65)
 
                 header_data = [[img,
-                    Paragraph("<b>RASHID BROTHERS</b><br/>""<font name='Helvetica' size='8'>" \
-                    "Manufacturer Of Leather & Leather Goods</font>",company_style),
-                    Paragraph("<b>+92-21-35116818</b><br/>""rashidbrothers371@gmail.com<br/>"
-                        "Karachi, Pakistan</font>",subtitle_style)]]
+                    Paragraph(
+                        "<b>RASHID BROTHERS</b><br/>"
+                        "<font name='Helvetica' size='9'>"
+                        "Manufacturer Of Leather & Leather Goods"
+                        "</font>",company_style),
 
-                header_table = Table(header_data,colWidths=[70, 430, 220])
-
+                    Paragraph("<b>+92-21-35116818</b><br/>"
+                              "rashidbrothers371@gmail.com<br/>"
+                              "Karachi, Pakistan",subtitle_style)
+                ]]
+                header_table = Table(header_data,colWidths=[75, 430, 220])
                 header_table.setStyle(TableStyle([
                     ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                     ("ALIGN", (0, 0), (0, 0), "LEFT"),
-                    ("ALIGN", (1, 0), (1, 0), "CENTER"),
+                    ("ALIGN", (1, 0), (1, 0), "LEFT"),
                     ("ALIGN", (2, 0), (2, 0), "RIGHT"),
                     ("LINEBELOW", (0, 0), (-1, 0), 1, colors.black),
-                    ("BOTTOMPADDING", (0, 0), (-1, 0), 8)
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
                 ]))
                 elements.append(header_table)
-
             else:
-                elements.append(Paragraph("RASHID BROTHERS", company_style))
+                elements.append(Paragraph("<b>RASHID BROTHERS</b>",company_style))
                 elements.append(Paragraph("Manufacturer Of Leather & Leather Goods",subtitle_style))
-            elements.append(Paragraph(report_var.get().upper(),title_style))
 
+            # ================= REPORT TITLE =================
+            elements.append(Paragraph(report_var.get().upper(),title_style))
             data = [list(tree["columns"])]
 
             for item in tree.get_children():
