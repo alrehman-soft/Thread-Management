@@ -687,32 +687,28 @@ def open_stock_out(win, back_command=None):
             pdf.drawRightString(page_width - 55, y, f'{float(data["final_total_price"] or 0):.2f}')
 
             y -= 45
-
-            # ISSUED BY + SIGNATURE
-            pdf.setFont("Helvetica-Bold", 10)
-
-            # Footer se thora sa upar
+            # # ISSUED BY + SIGNATURE
             signature_y = 105
 
-            # Issued By - LEFT
-            pdf.setFillColorRGB(0.05, 0.20, 0.45)
-            pdf.drawString(40, signature_y, "Issued By:")
-            pdf.setFillColorRGB(0,0,0)
+            # Signature Line - RIGHT SIDE
+            pdf.setFillColorRGB(0, 0, 0)
+            pdf.setLineWidth(1)
+            pdf.line(page_width - 190, signature_y + 12, page_width - 45, signature_y + 12)
 
+            # Signature Label - BELOW the line
+            pdf.setFillColorRGB(0.05, 0.20, 0.45)
+            pdf.setFont("Helvetica-Bold", 9)
+            pdf.drawCentredString(page_width - 117, signature_y - 5, "Authorized Signature")
+            pdf.setFillColorRGB(0, 0, 0)
+
+            # Issued By - LEFT SIDE (same as before)
+            pdf.setFillColorRGB(0.05, 0.20, 0.45)
+            pdf.setFont("Helvetica-Bold", 10)
+            pdf.drawString(40, signature_y, "Issued By:")
+            pdf.setFillColorRGB(0, 0, 0)
             pdf.setFont("Helvetica", 10)
             pdf.drawString(105, signature_y, str(data["issued_by"] or "N/A"))
-
-            # Signature - RIGHT
-            pdf.setFont("Helvetica-Bold", 10)
-            pdf.setLineWidth(1)
-            pdf.line(page_width - 150,signature_y + 12,page_width - 45,signature_y + 12)
-
-            # Signature text BELOW the line
-            pdf.setFillColorRGB(0.05, 0.20, 0.45)
-            pdf.setFont("Helvetica-Bold", 10)
-            pdf.drawCentredString(page_width - 97,signature_y - 5,"Signature")
-            pdf.setFillColorRGB(0,0,0)
-
+            
             # FOOTER
             pdf.line(40, 80, page_width - 40, 80)
 
