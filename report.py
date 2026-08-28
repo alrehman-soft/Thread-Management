@@ -37,7 +37,7 @@ def open_reports(win, back_command=None):
     tk.Label(filter_frame,text="Report Type:",font=("Segoe UI", 10, "bold"),
             bg="#f4f6f9").grid(row=0, column=0, padx=8, pady=5)
 
-    report_var = tk.StringVar(value="Stock In Report")
+    report_var = tk.StringVar(master=win,value="Stock In Report")
 
     report_combo = ttk.Combobox(filter_frame,textvariable=report_var,state="readonly",
             width=25,font=("Segoe UI", 10))
@@ -59,15 +59,15 @@ def open_reports(win, back_command=None):
     tk.Label(filter_frame,text="From:",font=("Segoe UI", 10, "bold"),bg="#f4f6f9"
             ).grid(row=0, column=2, padx=8)
 
-    from_var = tk.StringVar()
+    from_var = tk.StringVar(master=win)
     from_entry = DateEntry(filter_frame,textvariable=from_var,width=18,
-        font=("Segoe UI",10),date_pattern="yyyy-mm-dd")
+                        font=("Segoe UI",10),date_pattern="yyyy-mm-dd")
     from_entry.grid(row=0,column=3,padx=8)
 
     tk.Label(filter_frame,text="To:",font=("Segoe UI",10,"bold"),
         bg="#f4f6f9").grid(row=0,column=4,padx=8)
 
-    to_var = tk.StringVar()
+    to_var = tk.StringVar(master=win)
     to_entry = DateEntry(filter_frame,textvariable=to_var,width=18,
         font=("Segoe UI",10),date_pattern="yyyy-mm-dd")
     to_entry.grid(row=0,column=5,padx=8)
@@ -110,9 +110,7 @@ def open_reports(win, back_command=None):
                 font=("Segoe UI", 11, "bold"),bg="#f4f6f9",fg="#00377f")
     amount_label.pack(side="right", padx=10)
 
-    # ============================================================
     # LOAD REPORT FUNCTION
-    # ============================================================
     def load_report():
         for item in tree.get_children():
             tree.delete(item)
@@ -474,7 +472,7 @@ def open_reports(win, back_command=None):
                 if conn:
                     conn.close()
 
-                # ========== ✅ CURRENT STOCK REPORT ==========
+                # ========== CURRENT STOCK REPORT ==========
         elif report == "Current Stock Report":
             columns = ("Thread", "Size", "Available Qty")
             tree["columns"] = columns
@@ -608,9 +606,7 @@ def open_reports(win, back_command=None):
         else:
             messagebox.showinfo("Coming Soon", f"{report} will be added next.")
 
-    # ============================================================
     # EXPORT FUNCTIONS (PDF & EXCEL)
-    # ============================================================
     def export_pdf():
         if not tree.get_children():
             messagebox.showwarning("No Data", "Please generate a report first.")
@@ -642,8 +638,7 @@ def open_reports(win, back_command=None):
                 img = Image(logo_path,width=65,height=65)
 
                 header_data = [[img,
-                    Paragraph(
-                        "<b>RASHID BROTHERS</b><br/>"
+                    Paragraph("<b>RASHID BROTHERS</b><br/>"
                         "<font name='Helvetica' size='9'>"
                         "Manufacturer Of Leather & Leather Goods"
                         "</font>",company_style),
@@ -676,8 +671,8 @@ def open_reports(win, back_command=None):
             table = Table(data, repeatRows=1)
 
             table.setStyle(TableStyle([
-                ("BACKGROUND", (0, 0), (-1, 0), colors.darkblue),
-                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
                 ("FONTSIZE", (0, 0), (-1, -1), 10),
                 ("ALIGN", (0, 0), (-1, -1), "CENTER"),
@@ -773,20 +768,19 @@ def open_reports(win, back_command=None):
         except Exception as e:
             messagebox.showerror("Excel Error", str(e))
 
-    # ============================================================
     # BUTTONS
-    # ============================================================
     tk.Button(button_frame,text="🔍\nView Report",command=load_report,font=("Segoe UI", 10, "bold"),
-                bg="#27ae60",fg="white",width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
+                bg="#20a055",fg="white",width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
 
     tk.Button(button_frame,text="🔄\nRefresh",command=load_report,font=("Segoe UI", 10, "bold"),
-        bg="#2980b9",fg="white",width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
+        bg="#c0392b",fg="white",width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
 
-    tk.Button(button_frame,text="📄\nPDF",command=export_pdf,font=("Segoe UI", 10, "bold"),bg="#c0392b",
+    tk.Button(button_frame,text="📄\nPDF",command=export_pdf,font=("Segoe UI", 10, "bold"),bg="#0679c6",
         fg="white",width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
 
-    tk.Button(button_frame,text="📊\nExcel",command=export_excel,font=("Segoe UI", 10, "bold"),bg="#16a085",
-        fg="white",width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
+    tk.Button(button_frame,text="📊\nExcel",command=export_excel,
+              font=("Segoe UI", 10, "bold"),bg="#de7a28",fg="white",
+        width=12,height=2,relief="flat",cursor="hand2").pack(side="left", padx=8)
 
     # Initial report
     load_report()

@@ -146,15 +146,18 @@ def build_header(parent):
     def update_date_time():
         nonlocal after_id
         try:
-            # ✅ Check if widget still exists
+            # Check if widget still exists
             if date_time_label and date_time_label.winfo_exists():
                 from datetime import datetime
                 now = datetime.now()
                 date_time_label.config(text=now.strftime("%d-%m-%Y  |  %I:%M:%S %p"))
                 after_id = date_time_label.after(1000, update_date_time)
             else:
-                # ✅ Widget destroyed, stop the loop
+                # Widget destroyed
                 after_id = None
+        except tk.TclError:
+        # Widget destroyed, stop the loop
+            after_id = None
         except:
             after_id = None
 
@@ -196,11 +199,21 @@ def build_header(parent):
         refresh_btn.place(relx=0.60, rely=0.68, anchor="center")
 
     canvas.bind("<Configure>", redraw)
+
+    def on_destroy(event):
+        nonlocal after_id
+        if after_id is not None:
+            try:
+                outer.after_cancel(after_id)
+            except:
+                pass
+            after_id = None
+    
+    outer.bind("<Destroy>", on_destroy)
     
     # Initial call
     parent.after(100, redraw)
     return outer
-
 
 # CARDS
 def create_kpi_card(parent, title, value_text, color_start, color_end, width=300, height=90):
@@ -392,7 +405,7 @@ def open_order_history(win, back_callback):
 
     tk.Button(header, text="➕ New Sale (Stock Out)",
               command=lambda: open_stock_out(win, lambda: open_order_history(win, back_callback)),
-              bg="#2980b9", fg="white", font=("Arial", 10, "bold"), width=20, height=2,
+              bg="#0d4695", fg="white", font=("Arial", 10, "bold"), width=20, height=2,
               relief="flat", cursor="hand2").pack(side="right", padx=20)
 
     tree_frame = tk.Frame(win, bg="#f4f6f9")
@@ -670,7 +683,8 @@ def open_dashboard():
                       font=("Segoe UI", 10, "bold"), bg="white", fg="#2980b9",
                       relief="flat", cursor="hand2").pack(anchor="w", padx=15, pady=6)
 
-    footer = tk.Label(scroll_frame, text="© 2026 Thread ERP System — Al-Rehman Computer", bg="#eef1f6", fg="gray")
+    footer = tk.Label(scroll_frame, text="© 2026 Thread Inventory System — Al-Rehman Software\nContact # 0333-3988781", 
+                    font=("Segoe UI", 10, "bold"),bg="#eef1f6", fg="#12266b")
     footer.pack(side="bottom", pady=6)
 
     root.mainloop()

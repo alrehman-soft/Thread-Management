@@ -572,10 +572,10 @@ def open_send_dyeing_list(win, back_callback=None):
     btn_frame.pack(pady=15)
 
     # BUTTONS
-    buttons = [("Edit",edit_record,"#f0b14c"),
+    buttons = [("Edit",edit_record,"#f0a62e"),
             ("Delete",delete_record,"#c0392b"),
             ("Refresh",refresh,"#000000"),
-            ("Print",print_record,"#2b80e7"),
+            ("Print",print_record,"#1b4fbf"),
             ("Back",back_to_send_dyeing,"#34495e")]
 
     for i, (text, cmd, color) in enumerate(buttons):

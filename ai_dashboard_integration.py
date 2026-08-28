@@ -1082,20 +1082,10 @@ class AIDashboard:
         button_frame.pack(fill="x", pady=(15, 5))
         button_frame.pack_propagate(False)
         
-        ask_btn = tk.Button(
-            button_frame,
-            text="🔍  Ask AI",
-            command=ask_question,
-            bg=BLUE,
-            fg="white",
-            activebackground=DARK_BLUE,
-            activeforeground="white",
-            font=("Segoe UI", 11, "bold"),
-            bd=0,
-            cursor="hand2",
-            width=12,
-            height=2
-        )
+        ask_btn = tk.Button(button_frame,text="🔍 Ask AI",command=ask_question,
+            bg=BLUE,fg="white",activebackground=DARK_BLUE,activeforeground="white",
+            font=("Segoe UI", 11, "bold"),relief="flat",cursor="hand2",width=12,
+            height=2)
         ask_btn.pack(side="left", padx=(0, 10))
         
         def clear_question():
@@ -1109,10 +1099,10 @@ class AIDashboard:
             
             question_entry.focus()
         
-        clear_btn = tk.Button(button_frame,text="🗑  Clear",command=clear_question,
+        clear_btn = tk.Button(button_frame,text="🗑Clear",command=clear_question,
             bg=WHITE,fg="#596579",activebackground="#edf1f7",activeforeground=TEXT,
-            font=("Segoe UI", 11, "bold"),bd=0,cursor="hand2",width=10,height=2,
-            highlightthickness=1,highlightbackground=BORDER)
+            font=("Segoe UI", 11, "bold"),relief="flat",cursor="hand2",width=10,
+            height=2,highlightthickness=1,highlightbackground=BORDER)
         clear_btn.pack(side="left", padx=(0, 10))
         
         def print_last_answer_click():
@@ -1124,24 +1114,17 @@ class AIDashboard:
             
             self.print_direct_to_printer(self.last_answer, self.last_question)
         
-        print_btn = tk.Button(button_frame,text="🖨️Print",command=print_last_answer_click,
+        print_btn = tk.Button(button_frame,text=" 🖨️Print",command=print_last_answer_click,
             bg=WHITE,fg="#596579",activebackground="#edf1f7",activeforeground=TEXT,
-            font=("Segoe UI", 11, "bold"),bd=0,cursor="hand2",width=10,height=2,
-            highlightthickness=1,highlightbackground=BORDER)
+            font=("Segoe UI", 11, "bold"),relief="flat",cursor="hand2",width=10,
+            height=2,highlightthickness=1,highlightbackground=BORDER)
         print_btn.pack(side="left", padx=(0, 10))
         
         close_btn = tk.Button(button_frame,text="✕  Close",command=win.destroy,bg=WHITE,
             fg="#596579",activebackground="#edf1f7",activeforeground=TEXT,
-            font=("Segoe UI", 11, "bold"),bd=0,cursor="hand2",width=10,height=2,
-            highlightthickness=1,highlightbackground=BORDER)
+            font=("Segoe UI", 11, "bold"),relief="flat",cursor="hand2",width=10,
+            height=2,highlightthickness=1,highlightbackground=BORDER)
         close_btn.pack(side="left")
-        
-        # ===== VOICE INFORMATION =====
-        # info_frame = tk.Frame(main, bg=BG, height=25)
-        # info_frame.pack(fill="x", pady=(2, 0))
-        
-        # tk.Label(info_frame,text="🎙️ Voice Assistant",font=("Segoe UI", 9, "bold"),bg=BG,fg=BLUE).pack(side="left")
-        # tk.Label(info_frame,text="",font=("Segoe UI", 9),bg=BG,fg=GRAY).pack(side="left")
         
         question_entry.bind("<Return>", lambda event: ask_question())
         

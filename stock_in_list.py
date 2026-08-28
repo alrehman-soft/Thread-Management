@@ -477,13 +477,11 @@ def open_stock_in_list():
               font=("Segoe UI",12,"bold"), fg="white", bg="#c0392b", width=7, height=1).grid(row=0,column=1,padx=10)
 
     tk.Button(btn_frame, text="Print", command=print_selected,
-              font=("Segoe UI",12,"bold"), fg="white", bg="#2980b9",
+              font=("Segoe UI",12,"bold"), fg="white", bg="#1b4fbf",
               width=7, height=1,justify="center").grid(row=0,column=2,padx=10)
 
     tk.Button(btn_frame, text="Refresh", command=load_data,
           font=("Segoe UI",11,"bold"), fg="white", bg="#0b0b0a", width=7, height=1).grid(row=0,column=3,padx=10)
 
-    # =========================
-    # Load data initially
-    # =========================
+    # Load data
     load_data()

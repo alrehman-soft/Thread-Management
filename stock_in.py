@@ -65,9 +65,7 @@ def open_stock_in(prefill_thread=None, prefill_size=None):
     price.trace("w", update_total)
     paid.trace("w", update_balance)
 
-    # =========================
     # SUPPLIER DETAILS SECTION
-    # =========================
     supplier_frame = tk.LabelFrame(win, text="Supplier Details", font=("Arial",14,"bold"),
                                    bg="#f4f6f9", padx=20, pady=10)
     supplier_frame.pack(padx=20, pady=10, fill="x")
@@ -182,8 +180,8 @@ def open_stock_in(prefill_thread=None, prefill_size=None):
 
     buttons = [
         ("💾","Save",save_data,"#064B23"),
-        ("🧹","Clear",clear_form,"#c0392b"),
-        ("📋","Stock List",open_stock_in_list,"#2980b9")    ]
+        ("🧹","Clear",clear_form,"#c9660c"),
+        ("📋","Stock List",open_stock_in_list,"#1b4fbf")    ]
 
     for i, (icon,text,cmd,color) in enumerate(buttons):
         btn = tk.Button(

@@ -156,8 +156,7 @@ def open_send_dyeing(win,back_callback=None):
 
     # ================= TOP INFO FRAME =================
     top_info_frame = tk.LabelFrame(scroll_frame, text="Basic Info",
-                                font=("Arial", 14, "bold"),
-                                bg="#f4f6f9", padx=20, pady=10)
+                font=("Arial", 14, "bold"),bg="#f4f6f9", padx=20, pady=10)
     top_info_frame.pack(padx=20, pady=10, fill="x")
 
     top_fields = [
@@ -175,8 +174,7 @@ def open_send_dyeing(win,back_callback=None):
 
         # ===== Date Picker for Date =====
         if label == "Date":
-            ent = DateEntry(top_info_frame, textvariable=var,
-                            date_pattern="yyyy-mm-dd", width=25)
+            ent = DateEntry(top_info_frame, textvariable=var,date_pattern="yyyy-mm-dd", width=25)
             ent.grid(row=row, column=col+1, padx=10, pady=5)
 
         # ===== Date Picker for Expected Return =====
@@ -185,21 +183,21 @@ def open_send_dyeing(win,back_callback=None):
                             date_pattern="yyyy-mm-dd", width=25)
             ent.grid(row=row, column=col+1, padx=10, pady=5)
 
-        # ===== Batch ID (Readonly) =====
+        # ===== Batch ID =====
         elif label == "Batch ID":
             ent = tk.Entry(top_info_frame, textvariable=var,
                         width=28, bg="#ecf0f1", state="readonly")
             ent.grid(row=row, column=col+1, padx=10, pady=5)
 
-        # ===== Normal Entry (Sender) =====
+        # ===== Normal Entry =====
         else:
             ent = tk.Entry(top_info_frame, textvariable=var,
                         width=28, bg="#ecf0f1")
             ent.grid(row=row, column=col+1, padx=10, pady=5)
+
     # ================= DYEING DETAILS FRAME =================
     bottom_info_frame = tk.LabelFrame(scroll_frame, text="Dyeing Details",
-                                    font=("Arial", 14, "bold"),
-                                    bg="#f4f6f9", padx=20, pady=10)
+                font=("Arial", 14, "bold"),bg="#f4f6f9", padx=20, pady=10)
     bottom_info_frame.pack(padx=20, pady=10, fill="x")
 
     # ===== Dyeing Info =====
@@ -244,7 +242,7 @@ def open_send_dyeing(win,back_callback=None):
     reason_text.bind("<FocusIn>", on_reason_focus_in)
     reason_text.bind("<FocusOut>", on_reason_focus_out)
 
-    # ===== Receiver (Normal) =====
+    # ===== Receiver =====
     tk.Label(bottom_info_frame, text="Receiver", bg="#f4f6f9").grid(row=4, column=0, sticky="w")
 
     tk.Entry(bottom_info_frame, textvariable=receiver_var,
@@ -332,11 +330,11 @@ def open_send_dyeing(win,back_callback=None):
               bg="#146c34", fg="#ffffff", width=8, height=2).grid(row=0, column=0, padx=20)
 
     tk.Button(btn_frame, text="🧹\nClear", command=clear_form,font=("Segoe UI",12,"bold"),
-              bg="#1b4fbf", fg="#ffffff", width=8, height=2).grid(row=0, column=1, padx=20)
+              bg="#c9660c", fg="#ffffff", width=8, height=2).grid(row=0, column=1, padx=20)
 
     tk.Button(btn_frame, text="📋\nView List",
               command=lambda: open_send_dyeing_list(win, lambda: open_send_dyeing(win, back_callback)),font=("Segoe UI",12,"bold"),
-              bg="#c9660c", fg="#ffffff", width=8, height=2).grid(row=0, column=2, padx=20)
+              bg="#1b4fbf", fg="#ffffff", width=8, height=2).grid(row=0, column=2, padx=20)
 
     tk.Button(btn_frame,text="⬅ Back",command=back_to_previous,bg="#34495e",
             fg="white",font=("Segoe UI", 12, "bold"),width=8,height=2,relief="flat",
