@@ -550,8 +550,16 @@ def open_stock_out(win, back_command=None):
             return
 
         so_number = data["so_number"]
+
+        # PDF folder
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        pdf_folder = os.path.join(base_dir, "PDF_Stock_Out")
+        
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)
+            
         filename = f"Stock_Out_{so_number}.pdf"
-        pdf_path = os.path.abspath(filename)
+        pdf_path = os.path.join(pdf_folder, filename)
 
         try:
             pdf = canvas.Canvas(pdf_path, pagesize=A4)

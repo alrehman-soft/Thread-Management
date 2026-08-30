@@ -10,6 +10,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
+from openpyxl.utils import get_column_letter
 
 
 def open_reports(win, back_command=None):
@@ -606,18 +607,39 @@ def open_reports(win, back_command=None):
         else:
             messagebox.showinfo("Coming Soon", f"{report} will be added next.")
 
-    # EXPORT FUNCTIONS (PDF & EXCEL)
+    # EXPORT FUNCTIONS
     def export_pdf():
         if not tree.get_children():
             messagebox.showwarning("No Data", "Please generate a report first.")
             return
 
-        filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF File", "*.pdf")])
+        # Create Reports folder
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        pdf_folder = os.path.join(base_dir, "PDF_Reports")
+        
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)
+
+        # Default filename with report type and date
+        from datetime import datetime
+        default_name = f"{report_var.get().replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+
+        filename = filedialog.asksaveasfilename(
+            defaultextension=".pdf",
+            filetypes=[("PDF File", "*.pdf")],
+            initialdir=pdf_folder,
+            initialfile=default_name
+        )
+
+        # filename = filedialog.asksaveasfilename(defaultextension=".pdf",
+        #             filetypes=[("PDF File", "*.pdf")])
+
         if not filename:
             return
 
         try:
-            doc = SimpleDocTemplate(filename, pagesize=landscape(A4), rightMargin=20, leftMargin=20, topMargin=20, bottomMargin=20)
+            doc = SimpleDocTemplate(filename, pagesize=landscape(A4),
+                rightMargin=20, leftMargin=20, topMargin=20, bottomMargin=20)
 
             styles = getSampleStyleSheet()
             company_style = ParagraphStyle("Company",parent=styles["Normal"],fontName="Helvetica-Bold",
@@ -710,7 +732,23 @@ def open_reports(win, back_command=None):
             messagebox.showwarning("No Data", "Please generate a report first.")
             return
 
-        filename = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel File", "*.xlsx")])
+        # Create Reports folder
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        pdf_folder = os.path.join(base_dir, "PDF_Reports")
+        
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)
+
+        from datetime import datetime
+        default_name = f"{report_var.get().replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+
+        filename = filedialog.asksaveasfilename(
+            defaultextension=".xlsx",
+            filetypes=[("Excel File", "*.xlsx")],
+            initialdir=pdf_folder,
+            initialfile=default_name
+        )
+
         if not filename:
             return
         try:
@@ -750,16 +788,16 @@ def open_reports(win, back_command=None):
                 for col_num, value in enumerate(values, start=1):
                     ws.cell(row=row_num,column=col_num,value=value)
 
-            for column in ws.columns:
-                max_length = 0
-                column_letter = column[0].column_letter
-
-                for cell in column:
-                    if cell.value:
-                        max_length = max(max_length,len(str(cell.value)))
-
-                    ws.column_dimensions[column_letter].width = min(
-                        max_length + 3,30)
+            # auto column width without touching MergedCell
+                for col_idx, column in enumerate(ws.columns, start=1):
+                    max_length = 0
+                    column_letter = get_column_letter(col_idx)
+        
+                    for cell in column:
+                        if cell.value:
+                            max_length = max(max_length, len(str(cell.value)))
+        
+                    ws.column_dimensions[column_letter].width = min(max_length + 3, 30)
                 wb.save(filename)
                 messagebox.showinfo("Success","Excel report generated successfully! ✅")
 

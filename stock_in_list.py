@@ -262,8 +262,14 @@ def open_stock_in_list():
         balance = item[13]
 
         # PDF FILE
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        pdf_folder = os.path.join(base_dir, "PDF_Stock_In")
+        
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)
+
         filename = f"Stock_In_{po_number}.pdf"
-        pdf_path = os.path.abspath(filename)
+        pdf_path = os.path.join(pdf_folder, filename)
 
         try:
             pdf = canvas.Canvas(pdf_path, pagesize=A4)

@@ -380,8 +380,16 @@ def open_send_dyeing_list(win, back_callback=None):
             return
 
         batch_id = data["batch_id"]
+
+        # Create Send Dyeing PDF folder
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        pdf_folder = os.path.join(base_dir, "PDF_Send_Dyeing")
+
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)
+
         filename = f"Send_Dyeing_{batch_id}.pdf"
-        pdf_path = os.path.abspath(filename)
+        pdf_path = os.path.join(pdf_folder, filename)
 
         try:
             pdf = canvas.Canvas(pdf_path,pagesize=A4)
